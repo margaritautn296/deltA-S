@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "git fetch --quiet origin main 2>/dev/null || exit 0; b=$(git rev-list --count HEAD..origin/main 2>/dev/null); [ \"${b:-0}\" -eq 0 ] && exit 0; if git merge --ff-only --quiet origin/main >/dev/null 2>&1; then echo \"{\\\"systemMessage\\\":\\\"Se trajeron $b commit(s) nuevos de origin/main.\\\"}\"; else echo \"{\\\"systemMessage\\\":\\\"Esta rama está $b commit(s) detrás de origin/main y no se pudo actualizar sola.\\\",\\\"hookSpecificOutput\\\":{\\\"hookEventName\\\":\\\"SessionStart\\\",\\\"additionalContext\\\":\\\"La rama actual está $b commit(s) detrás de origin/main y el fast-forward automático falló (commits propios o cambios sin guardar). Avisale al usuario y ofrecé traer los cambios antes de trabajar.\\\"}}\"; fi",
+            "timeout": 30,
+            "statusMessage": "Trayendo cambios de origin/main..."
+          }
+        ]
+      }
+    ]
+  }
+}
