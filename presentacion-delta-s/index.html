@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DeltA S · Debrief</title>
+  <link rel="stylesheet" href="estilos.css">
+  <!-- Paleta del video de DeltA S: crema, verde panel, verde agua y el amarillo de los cables. El motor 3D lee estas mismas variables. -->
+  <style id="paleta">
+    :root {
+      --oscuro: #1c3327;          /* verde panel muy oscuro: texto sobre claro */
+      --oscuro-suave: #4b5d50;
+      --claro: #f6ead2;           /* crema */
+      --claro-suave: #cdc5ab;
+      --arena: #ead8b4;
+      --piedra: #cfc0a0;
+      --acento: #e9a23b;          /* amarillo de los cables */
+      --estudio-claro: #f2e1c0;   /* el fondo del video */
+      --estudio-oscuro: #12211a;
+      --piso-claro: #e3cda4;
+      --piso-oscuro: #2a4235;
+      --color-1: #a9c9ad;         /* verde agua */
+      --color-2: #6f9a7c;
+      --color-3: #d9c08e;
+      /* Materiales del prototipo */
+      --agua: #8fbfa3;
+      --agua-tratada: #9fd0dc;
+      --hierro: #8a5a2b;
+      --arsenico: #a23d2b;
+      --arena-filtro: #e8b45e;
+      --fuente-display: "Inter Tight", "Inter", system-ui, sans-serif;
+      --fuente-texto: "Inter", system-ui, sans-serif;
+    }
+    .gigante[data-escena="descarte"] { justify-self: end; margin-right: 3cqw; --tamano-gigante: 15cqw; --color-gigante: #213b2d; }
+    .frentes { display: flex; flex-wrap: wrap; gap: 0.6cqw; }
+  </style>
+  <script type="importmap">
+    { "imports": {
+      "three": "./vendor/three.module.min.js",
+      "three/addons/RoundedBoxGeometry.js": "./vendor/addons/RoundedBoxGeometry.js",
+      "three/addons/RoomEnvironment.js": "./vendor/addons/RoomEnvironment.js",
+      "motor": "./motor.js",
+      "tema": "./tema.js",
+      "deck": "./deck.js"
+    } }
+  </script>
+</head>
+<body>
+<main class="escenario" id="escenario" data-tema="oscuro" aria-roledescription="presentación" aria-label="DeltA S · Agua segura con energía solar">
+
+  <div class="gigantes" aria-hidden="true">
+    <div class="gigante" data-escena="descarte">DeltA S</div>
+  </div>
+
+  <canvas id="lienzo"></canvas>
+  <div class="vineta"></div>
+
+  <div class="capas">
+
+    <!-- ============ 1. Persona 1 · Punto de partida ============ -->
+    <section class="capa" data-escena="descarte" data-bloque="Partida">
+      <div class="texto">
+        <p class="etiqueta entra">01 — Punto de partida</p>
+        <h1 class="titulo revelar">
+          <span class="revelar__linea" style="--i: 0"><span>Desafío 08:</span></span>
+          <span class="revelar__linea" style="--i: 1"><span>basura verde.</span></span>
+        </h1>
+        <ol class="lista entra">
+          <li>Segunda vida útil para paneles, en usos de menor exigencia.</li>
+          <li>Desarme seguro y recuperación de materiales.</li>
+        </ol>
+        <p class="entra" style="--d: 1">Arrancamos con una lluvia de ideas. Antes de diseñar, investigamos en qué estado llega el panel al descarte.</p>
+      </div>
+      <div class="etiquetas" aria-hidden="true">
+        <div class="etiqueta-3d" data-pieza="panel" data-punto="1,0.6,0" style="--i: 0"><b>¿Sirve todavía?</b><span>Panel de descarte</span></div>
+      </div>
+      <aside class="notas">Buenas tardes, nosotros presentamos el proyecto DeltA S. Elegimos el desafío 8, Desechos de basura verde, que ofrecía dos caminos: darles una segunda vida útil a los paneles solares en usos de menor exigencia, o diseñar un sistema seguro de desarme y recuperación de materiales. Arrancamos con una lluvia de ideas. Antes de pensar qué hacer con el panel, investigamos en qué estado llega realmente al descarte, y encontramos un dato que nos llamó mucho la atención.</aside>
+    </section>
+
+    <!-- ============ 2. Persona 2 · Investigación ============ -->
+    <section class="capa" data-escena="energia" data-bloque="Investigación">
+      <div class="texto">
+        <p class="etiqueta entra">02 — Investigación</p>
+        <h2 class="titulo revelar">
+          <span class="revelar__linea" style="--i: 0"><span>El residuo</span></span>
+          <span class="revelar__linea" style="--i: 1"><span>no está <span class="subrayado">muerto</span>.</span></span>
+        </h2>
+        <div class="datos entra">
+          <div><b>≈<span data-contar="80">0</span> %</b><span>Potencia que conserva a los 25 años</span></div>
+          <div><b><span data-contar="0.01" data-decimales="2">0</span> mg/L</b><span>Límite de arsénico · CAA art. 982</span></div>
+        </div>
+        <p class="entra" style="--d: 1">Buscamos dónde alcanzara una energía chica y variable: el agua de pozo con arsénico del sur de Córdoba y La Pampa.</p>
+      </div>
+      <div class="etiquetas" aria-hidden="true">
+        <div class="etiqueta-3d" data-pieza="medidor" data-punto="1,0.7,0" style="--i: 0"><b>≈80 %</b><span>Energía que le queda</span></div>
+        <div class="etiqueta-3d etiqueta-3d--abajo" data-ancla="gota" style="--i: 1"><b>As</b><span>Agua de pozo</span></div>
+      </div>
+      <aside class="notas">Ahí apareció el primer dato clave. Los paneles suelen tener garantía de conservar alrededor del 80 % de su potencia después de unos 25 años, y muchos se retiran antes: por repotenciación de los parques, por daños menores o porque salen modelos más eficientes. Es decir, el panel que se descarta todavía genera energía; lo que falta son criterios para evaluarlo y usos que lo aprovechen. Entonces buscamos una necesidad local donde una energía chica y variable alcanzara. Así llegamos al arsénico en el agua de pozo del sur de Córdoba y La Pampa, y a la electrocoagulación: un proceso electroquímico en el que un ánodo de hierro libera hierro que forma hidróxidos, adsorbe el arsénico y precipita. Fuentes: CSIR, SolarPower Europe, NSTDA Tailandia (74 % de los paneles retirados por encima del 70 %); CAA art. 982 (ref. 9).</aside>
+    </section>
+
+    <!-- ============ 3. Persona 3 · TRIZ ============ -->
+    <section class="capa" data-escena="triz" data-bloque="Método">
+      <div class="texto">
+        <p class="etiqueta entra">03 — Método: TRIZ</p>
+        <h2 class="titulo revelar">
+          <span class="revelar__linea" style="--i: 0"><span>Dos problemas,</span></span>
+          <span class="revelar__linea" style="--i: 1"><span>una conexión.</span></span>
+        </h2>
+        <ol class="lista entra">
+          <li>Análisis de recursos: el panel descartado da la corriente continua.</li>
+          <li>Convertir lo perjudicial en útil.</li>
+          <li>Retroalimentación: dosificar por carga, no por tiempo (Faraday).</li>
+        </ol>
+        <span class="insignia entra" style="--d: 1">Agua almacenada, no baterías · 25 L/día</span>
+      </div>
+      <div class="etiquetas" aria-hidden="true">
+        <div class="etiqueta-3d etiqueta-3d--izquierda" data-pieza="panel" data-punto="-0.6,0.9,0" style="--i: 0"><b>Recurso</b><span>Panel de descarte</span></div>
+        <div class="etiqueta-3d" data-pieza="controlador" data-punto="1,0.3,0" style="--i: 1"><b>Q = I · t</b><span>Corta al llegar a la carga</span></div>
+        <div class="etiqueta-3d etiqueta-3d--abajo" data-pieza="celda" data-punto="0,-1,0" style="--i: 2"><b>Ánodo de hierro</b><span>Electrocoagulación</span></div>
+      </div>
+      <aside class="notas">Teníamos dos problemas sueltos, y para conectarlos usamos herramientas de TRIZ. Primero, el análisis de recursos: el panel descartado es un recurso barato y disponible, y la electrocoagulación necesita justamente corriente continua de baja potencia. Es el principio de convertir algo perjudicial en algo útil. Después apareció una contradicción: necesitábamos dosificar el hierro con precisión, pero la energía de un panel degradado es variable. La resolvimos con retroalimentación: el equipo no trabaja por tiempo sino por carga acumulada, según la ley de Faraday, y corta cada tanda al llegar a la carga necesaria. Y para no sumar baterías como nuevo residuo, decidimos almacenar agua tratada en lugar de energía, con una demanda chica de unos 25 litros diarios.</aside>
+    </section>
+
+    <!-- ============ 4. Persona 4 · Gestión y aprendizajes ============ -->
+    <section class="capa" data-escena="validar" data-bloque="Gestión">
+      <div class="texto">
+        <p class="etiqueta entra">04 — Gestión y aprendizajes</p>
+        <h2 class="titulo revelar">
+          <span class="revelar__linea" style="--i: 0"><span>Cuatro frentes,</span></span>
+          <span class="revelar__linea" style="--i: 1"><span>tres lecciones.</span></span>
+        </h2>
+        <div class="frentes entra">
+          <span class="insignia">Paneles</span><span class="insignia">Química</span><span class="insignia">Diseño</span><span class="insignia">Comunicación</span>
+        </div>
+        <ol class="lista entra" style="--d: 1">
+          <li>Descartar a tiempo.</li>
+          <li>Investigar el residuo antes de diseñar.</li>
+          <li>Usar un método para conectar problemas.</li>
+        </ol>
+      </div>
+      <div class="etiquetas" aria-hidden="true">
+        <div class="etiqueta-3d" data-pieza="panel" data-punto="1,1,0" style="--i: 0"><b>Paneles reales</b><span>Por validar</span></div>
+        <div class="etiqueta-3d etiqueta-3d--abajo" data-pieza="celda" data-punto="0,-1,0" style="--i: 1"><b>Agua de pozo</b><span>Por validar</span></div>
+        <div class="etiqueta-3d etiqueta-3d--abajo" data-pieza="sensor" data-punto="0,-1,0" style="--i: 2"><b>Sensor de As</b><span>Por validar</span></div>
+        <div class="etiqueta-3d etiqueta-3d--izquierda" data-pieza="barros" data-punto="-1,0,0" style="--i: 3"><b>Barros</b><span>Por validar</span></div>
+      </div>
+      <aside class="notas">Para organizarnos nos dividimos por frentes: paneles, química del tratamiento, diseño del equipo y comunicación del reporte y el video. Usamos inteligencia artificial solo para la búsqueda inicial de bibliografía y después verificamos las fuentes. Los límites de caracteres y un video de dos minutos nos obligaron a priorizar. También tenemos claro qué falta validar: ensayar paneles reales de descarte, probar la celda con agua de pozo, confirmar que el sensor de arsénico sea viable en campo y definir la disposición de los barros. Nos llevamos tres aprendizajes: descartar a tiempo, investigar el estado real del residuo antes de diseñar, y usar un método para conectar problemas que parecían no tener relación.</aside>
+    </section>
+
+    <!-- ============ 5. Cierre ============ -->
+    <section class="capa capa--centro" data-escena="cierre" data-bloque="Cierre">
+      <div class="texto">
+        <p class="etiqueta entra">DeltA S · Agua segura con energía solar</p>
+        <h2 class="titulo revelar">
+          <span class="revelar__linea" style="--i: 0"><span>Energía que sobraba,</span></span>
+          <span class="revelar__linea" style="--i: 1"><span>agua que <span class="subrayado">faltaba</span>.</span></span>
+        </h2>
+        <p class="firma entra">Gracias · UTN FRC · Rally Latinoamericano de Innovación 2026</p>
+      </div>
+      <div class="etiquetas" aria-hidden="true">
+        <div class="etiqueta-3d" data-ancla="pozo" style="--i: 0"><b>Pozo</b><span>Agua con arsénico</span></div>
+        <div class="etiqueta-3d etiqueta-3d--abajo" data-pieza="celda" data-punto="0,-1,0" style="--i: 1"><b>Celda</b><span>Electrocoagulación</span></div>
+        <div class="etiqueta-3d" data-pieza="tanque" data-punto="1,0.2,0" style="--i: 2"><b>Agua tratada</b><span>25 L por día</span></div>
+      </div>
+      <aside class="notas">Cierre: el prototipo completo. Agua de pozo → tanque de la casa → celda de electrocoagulación alimentada por paneles de descarte → filtro de arena → agua tratada. Muchas gracias.</aside>
+    </section>
+
+  </div>
+
+  <div class="interfaz">
+    <div class="interfaz__arriba">
+      <span class="logo">DeltA S</span>
+      <ul class="interfaz__menu" id="menu"></ul>
+      <span class="interfaz__marca">Rally 2026 · Desafío 08</span>
+    </div>
+    <div class="interfaz__abajo">
+      <span class="interfaz__contador"><b id="numero">00</b><span id="total">/ 00</span></span>
+      <span class="interfaz__pista">← → para avanzar · F pantalla completa</span>
+      <span class="interfaz__avance"></span>
+    </div>
+  </div>
+
+  <div class="cargador">
+    <span class="logo">DeltA S</span>
+    <div class="cargador__linea"></div>
+    <div class="cargador__estado"><span>Preparando la escena</span><span id="porcentaje">0 %</span></div>
+  </div>
+  <div class="grano"></div>
+</main>
+<script type="module">import 'deck';</script>
+</body>
+</html>
